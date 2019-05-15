@@ -15,7 +15,13 @@ class Api::ContactsController < ApplicationController
                 bio: params[:bio]
                 )
     @contact.save
-    render "show.json.jbuilder"
+
+    if @contact.save
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @contact.errors.full_messages}, status: :unprocessable_entity
+    end
+
   end
 
   def show
@@ -34,7 +40,13 @@ class Api::ContactsController < ApplicationController
     @contact.bio = params[:bio] || @contact.bio
 
     @contact.save
-    render "show.json.jbuilder"
+
+    if @contact.save
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @contact.errors.full_messages}, status: :unprocessable_entity
+    end  
+    
   end
 
   def destroy
