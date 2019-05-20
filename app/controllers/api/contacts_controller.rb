@@ -1,5 +1,7 @@
 class Api::ContactsController < ApplicationController
  
+  before_action :authenticate_user
+
   def index
     @contacts = Contact.all
 
@@ -35,9 +37,11 @@ class Api::ContactsController < ApplicationController
   end
 
   def show
-    @contact = Contact.find(params[:id])
-    render "show.json.jbuilder"
+      @contact = Contact.find(params[:id])
+      render "show.json.jbuilder"
   end
+
+  
 
   def update
     @contact = Contact.find(params[:id])
