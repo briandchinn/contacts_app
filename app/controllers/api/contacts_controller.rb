@@ -3,7 +3,7 @@ class Api::ContactsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @contacts = Contact.all
+    @contacts = current_user.contacts
 
     if params[:first_name]
       @contacts = @contacts.where("first_name iLIKE ?", "#{params[:first_name]}")
@@ -24,7 +24,8 @@ class Api::ContactsController < ApplicationController
                 last_name: params[:last_name],
                 email: params[:email],
                 phone_number: params[:phone_number],
-                bio: params[:bio]
+                bio: params[:bio],
+                user_id: current_user.id
                 )
     @contact.save
 
@@ -37,8 +38,8 @@ class Api::ContactsController < ApplicationController
   end
 
   def show
-      @contact = Contact.find(params[:id])
-      render "show.json.jbuilder"
+    @contact = Contact.find(params[:id])
+    render "show.json.jbuilder"
   end
 
   
