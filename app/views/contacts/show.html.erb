@@ -1,0 +1,10 @@
+<h3>First Name: <%= @contact.first_name %></h3>
+<h3>Middle Name:<%= @contact.middle_name %></h3>
+<h3>Last Name: <%= @contact.last_name %></h3>
+<h3>Email: <%= @contact.email %></h3>
+<h3>Phone Number: <%= @contact.phone_number %></h3>
+<h3>Bio: <%= @contact.bio %></h3>
+
+<a href="/contacts">See All</a>
+<a href="/contacts/<%= @contact.id %>/edit">Edit Contact</a>
+<a href="/contacts/<%= @contact.id %>" data-method="delete" rel="nofollow">Delete Contact</a>
