@@ -1,9 +1,11 @@
 class Api::ContactsController < ApplicationController
  
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   def index
-    @contacts = current_user.contacts
+    # @contacts = current_user.contacts
+
+    @contacts = Contact.all
 
     if params[:first_name]
       @contacts = @contacts.where("first_name iLIKE ?", "#{params[:first_name]}")
@@ -15,7 +17,7 @@ class Api::ContactsController < ApplicationController
 
     if params[:group]
       group = Group.find_by(name: params[:group])
-      @contacts = group.contacts.where(user_id: current_user.id)
+      @contacts = group.contacts.where(user_id: params[:user_id])
     end
 
     render "index.json.jbuilder"
@@ -30,7 +32,7 @@ class Api::ContactsController < ApplicationController
                 email: params[:email],
                 phone_number: params[:phone_number],
                 bio: params[:bio],
-                user_id: current_user.id
+                user_id: params[:user_id]
                 )
     @contact.save
 
@@ -58,6 +60,7 @@ class Api::ContactsController < ApplicationController
     @contact.email = params[:email] || @contact.email
     @contact.phone_number = params[:phone_number] || @contact.phone_number
     @contact.bio = params[:bio] || @contact.bio
+    @contact.user_id = params[:user_id] || @contact.user_id
 
     @contact.save
 
